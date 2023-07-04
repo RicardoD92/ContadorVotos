@@ -7,6 +7,7 @@ function VoteFormList() {
     const [localidad, setLocalidad] = useState([]);
     const [escuela, setEscuela] = useState([]);
     const [mesa, setMesa] = useState([]);
+    const [agrupaciones,setAgrupaciones] = useState([]);
     // Valores seleccionados para el voto
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState(0);
     const [escuelaSeleccionada, setEscuelaSeleccionada] = useState(0);
@@ -31,7 +32,16 @@ function VoteFormList() {
             console.log(err)
         }
     }
-
+    const getAgrupaciones = async () => {
+        var url = configJson.backend_url + 'politicos/agrupaciones/';
+        try{
+        const response = await axios.get(url);
+        console.log(response.data.data);
+        setAgrupaciones(response.data.data);
+        } catch(err){
+            console.log(err)
+        }
+    }
     const handleSelectLocalidad = (e) => {
         setLocalidadSeleccionada(Number(e.target.value));
         getEscuelas(e.target.value);
@@ -63,6 +73,7 @@ function VoteFormList() {
 
     useEffect(() => {
         getLocalidades();
+        getAgrupaciones();
     }, []);
 
   return (
@@ -82,6 +93,9 @@ function VoteFormList() {
         <Form.Group controlId="selector2">
           <Form.Label>Escuela</Form.Label>
           <Form.Control as="select" onChange={handleSelectEscuela}>
+            <option disabled selected value="">
+                Seleccionar escuela
+            </option>
             {escuela.map(escuela => (
               <option key={escuela.id} value={JSON.stringify(escuela)}>{escuela.nombre}</option>
             ))}
@@ -92,14 +106,27 @@ function VoteFormList() {
         <Form.Group controlId="selector3">
           <Form.Label>Mesa</Form.Label>
           <Form.Control as="select" onChange={handleSelectMesa}>
+            <option disabled selected value="">
+                Seleccionar mesa
+            </option>
             {mesa.map(mesa => (
               <option key={mesa}>{mesa}</option>
             ))}
           </Form.Control>
         </Form.Group>
       </Col>
+      <Col lg={4} xs={12}>
+        <Form.Group controlId="selector1">
+          <Form.Label>Agrupaciones</Form.Label>
+          <Form.Control as="select">
+             {agrupaciones.map(agrupacion => (
+                  <option key={agrupacion.id} value={agrupacion.id}>{agrupacion.name}</option>
+             ))}
+          </Form.Control>
+        </Form.Group>
+      </Col>
     </Row>
-    <Row mt={2}>
+    <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
             <Button variant="primary" type="button" onClick={handleSubmit}>
             Submit

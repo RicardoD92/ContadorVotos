@@ -7,7 +7,7 @@ function Home() {
     <Container>
         <Row>
             <Col lg={12}>
-                <h1>Home</h1>
+                <h1>Ingresar votos</h1>
             </Col>
         </Row>
         <Row>
