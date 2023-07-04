@@ -35,8 +35,7 @@ function VoteFormList() {
     const getAgrupaciones = async () => {
         var url = configJson.backend_url + 'politicos/agrupaciones/';
         try{
-        const response = await axios.get(url);
-        console.log(response.data.data);
+        const response = await axios.get(url);s
         setAgrupaciones(response.data.data);
         } catch(err){
             console.log(err)
