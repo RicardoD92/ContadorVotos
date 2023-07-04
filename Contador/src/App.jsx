@@ -1,16 +1,17 @@
 
 import './App.css'
 import Header from './components/header/Header'
-import Dropdowns from './components/dropdowns/Dropdowns'
-
+import { Routes, Route } from "react-router-dom"
+import Home from './pages/Home'
 function App() {
   
   return (
-    <div>
-      <Header/>
-      <Dropdowns/>
-
-    </div>
+    <>
+    <Header/>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  </>
 
   )
 }

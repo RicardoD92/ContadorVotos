@@ -1,34 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import './header.css';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
-const App = () => {
-  const [localidades, setLocalidades] = useState([]);
-  const [escuelas, setEscuelas] = useState([]);
-
-  useEffect(() => {
-    // Realizar la llamada a la API 
-    fetch('API_JULI')
-      .then(response => response.json())
-      .then(data => {
-        // Actualizar estado API
-        setLocalidades(data.localidades);
-        setEscuelas(data.escuelas);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
 const Header = () => {
+
+
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -54,6 +35,5 @@ const Header = () => {
     </Navbar>
     </div>
   )}
-}
 
 export default Header
