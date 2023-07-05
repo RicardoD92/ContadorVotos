@@ -7,7 +7,9 @@ function VoteFormList() {
     const [localidad, setLocalidad] = useState([]);
     const [escuela, setEscuela] = useState([]);
     const [mesa, setMesa] = useState([]);
-    const [agrupaciones,setAgrupaciones] = useState([]);
+    const [presidente, setPresidente] = useState([]);
+    const [gobernador, setGobernador] = useState([]);
+    const [intendente, setIntendente] = useState([]);
     // Valores seleccionados para el voto
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState(0);
     const [escuelaSeleccionada, setEscuelaSeleccionada] = useState(0);
@@ -28,15 +30,6 @@ function VoteFormList() {
         const response = await axios.get(url);
         setEscuela(response.data.data.localidades);
         
-        } catch(err){
-            console.log(err)
-        }
-    }
-    const getAgrupaciones = async () => {
-        var url = configJson.backend_url + 'politicos/agrupaciones/';
-        try{
-        const response = await axios.get(url);s
-        setAgrupaciones(response.data.data);
         } catch(err){
             console.log(err)
         }
@@ -72,7 +65,6 @@ function VoteFormList() {
 
     useEffect(() => {
         getLocalidades();
-        getAgrupaciones();
     }, []);
 
   return (
@@ -114,16 +106,11 @@ function VoteFormList() {
           </Form.Control>
         </Form.Group>
       </Col>
-      <Col lg={4} xs={12}>
-        <Form.Group controlId="selector1">
-          <Form.Label>Agrupaciones</Form.Label>
-          <Form.Control as="select">
-             {agrupaciones.map(agrupacion => (
-                  <option key={agrupacion.id} value={agrupacion.id}>{agrupacion.name}</option>
-             ))}
-          </Form.Control>
-        </Form.Group>
-      </Col>
+    </Row>
+              {/* Inputs de candidatos */}
+      
+    <Row>
+
     </Row>
     <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
