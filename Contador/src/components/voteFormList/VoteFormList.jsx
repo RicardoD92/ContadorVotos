@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Form, Button,Col, Row , InputGroup} from 'react-bootstrap'
 import configJson from '../../utils/config.json'
 import axios from 'axios'
+import CandidatoItem from '../candidatoItem/CandidatoItem';
 
 
 function VoteFormList() {
@@ -21,23 +22,71 @@ function VoteFormList() {
         try{
         const response = await axios.get(url);
         setLocalidad(response.data.data.localidades);
-        console.log(response);
         } catch(err){
             console.log(err)
         }
     }
-    const handleVotosPresidente=(e) => {
-      setPresidente(e.target.value) 
 
+    const getPresidentes = async () => {
+      var uri= configJson.backend_url + 'politicos/todos/presidentes';
+      try {
+        const response = await axios.get(uri);
+        setPresidente(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    const handleVotosGobernador=(e) => {
-      setGobernador(e.target.value) 
+    
+    const getGobernadores = async () => {
+      var uri= configJson.backend_url + 'politicos/todos/gobernadores';
+      try {
+        const response = await axios.get(uri);
+        setGobernador(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
+    const getIntendentes = async () => {
+      var uri= configJson.backend_url + 'politicos/todos/intendentes';
+      try {
+        const response = await axios.get(uri);
+        setIntendente(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    const handleVotosIntendentee=(e) => {
-      setIntendente(e.target.value) 
-
-    }
+    
+    const handleInputChange = (presidenteId, newValue, type) => {
+      // Actualizar el valor en el array de presidentes
+      console.log(type);
+      if(type === 'presidente'){
+        const updatedPresidentes = presidente.map((presidente) => {
+          if (presidente.id === presidenteId) {
+            return { ...presidente, votos: newValue };
+          }
+          return presidente;
+        });
+        setPresidente(updatedPresidentes);
+      } else if(type === 'gobernador'){
+        const updatedGobernador = gobernador.map((gobernador) => {
+          if (gobernador.id === presidenteId) {
+            return { ...gobernador, votos: newValue };
+          }
+          return gobernador;
+        });
+        setGobernador(updatedGobernador);
+      } else {
+        const updatedIntendente = intendente.map((intendente) => {
+          if (intendente.id === presidenteId) {
+            return { ...intendente, votos: newValue };
+          }
+          return intendente;
+        });
+        setIntendente(updatedIntendente);
+      }
+    };
+  
 
     const getEscuelas = async (id) => {
         var url = configJson.backend_url + 'escuelas/' + id;
@@ -65,25 +114,50 @@ function VoteFormList() {
     const handleSelectMesa = (e) => {
         setMesaSeleccionada(Number(e.target.value));
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); 
+      const totalVotosPresidente = [];
+      const totalVotosGobernador = [];
+      const totalVotosIntendente = [];
+
+      presidente.map(presidente => {
+        const votos = presidente.votos ? Number(presidente.votos) : 0;
+        totalVotosPresidente.push({id_presidente: presidente.id,  cantidad_votos: votos});
+      })
+      gobernador.map(gobernador => {
+        const votos = gobernador.votos ? Number(gobernador.votos) : 0;
+        totalVotosGobernador.push({id_gobernador: gobernador.id,  cantidad_votos: votos});
+      })
+      intendente.map(intendente => {
+        const votos = intendente.votos ? Number(intendente.votos) : 0;
+        totalVotosIntendente.push({id_intendente: intendente.id,  cantidad_votos: votos});
+      })
 
         const form = {
             id_localidad: localidadSeleccionada,
             id_escuela: escuelaSeleccionada,
             nro_mesa: mesaSeleccionada,
-            votosPresidente: presidente,
-            votosGobernador: gobernador,
-            votosIntendente: intendente
+            voto_presidente: totalVotosPresidente,
+            voto_gobernador: totalVotosGobernador,
+            voto_intendente: totalVotosIntendente
 
         }
 
         // preparar formulario según documentación para realizar llamado a POST /votos/
-        console.log(form);
+        const uri = configJson.backend_url + 'votos/';
+        try{
+        const response = await axios.post(uri,form);
+        console.log(response);
+        } catch(err){
+          console.log(err);
+        }
     }
 
     useEffect(() => {
         getLocalidades();
+        getPresidentes();
+        getGobernadores();
+        getIntendentes();
     }, []);
 
   return (
@@ -127,108 +201,48 @@ function VoteFormList() {
       </Col>
     </Row>
     <br></br>
+    {/* ACA COmienzAN LOS INPUT de CANDIDATOS*/}
     <Row>
-      <Col lg={4} xs={12}>          {/*una opcion para colocar los nombres de cada candidato */}
-    <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">nombre del candidato</InputGroup.Text>
-        <Form.Control
-          placeholder="nombre del candidato"
-          aria-label="nombre del candidato"
-          aria-describedby="basic-addon1"
-        />
-      </InputGroup>
-
-
+      <Col lg={12} xs={12}>
+          <h2>Presidentes</h2>
       </Col>
-      
-    </Row>
-
-      <Row>
-        <h1>Unión por la Patria</h1>
-        <h2>Lista Celeste y Blanca: Sergio Massa - Agustín Rossi</h2>
-
-      </Row>
-              {/* Inputs de candidatos */}
-      
-    <Row>
-    <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>presidente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosPresidente} as="input" value={presidente} placeholder='Candidato1' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Gobernador nombre</Form.Label>
-          <Form.Control  onChange={handleVotosGobernador} as="input" value={gobernador} placeholder='gobernador' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Intendente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosIntendentee} as="input" value={intendente} placeholder='intendente' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-      
-
+    {presidente.map((presidente) => (
+      <Col lg={3} xs={12}>
+          <CandidatoItem
+            key={presidente.id}
+            candidato={presidente}
+            onInputChange={handleInputChange}
+          />
+        </Col>
+      ))}
     </Row>
     <Row>
-        <h1>Juntos por el Cambio</h1>
-        <h2>Lista El Cambio de Nuestras Vidas: Horacio Rodríguez Larreta - Gerardo Morales</h2>
-
-      </Row>
-    <Row>
-    <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>presidente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosPresidente} as="input" value={presidente} placeholder='Candidato1' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Gobernador nombre</Form.Label>
-          <Form.Control  onChange={handleVotosGobernador} as="input" value={gobernador} placeholder='gobernador' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Intendente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosIntendentee} as="input" value={intendente} placeholder='intendente' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-      
-
+    <Col lg={12} xs={12}>
+          <h2>Gobernadores</h2>
+    </Col>
+    {gobernador.map((gobernador) => (
+      <Col lg={3} xs={12}>
+          <CandidatoItem
+            key={gobernador.id}
+            candidato={gobernador}
+            onInputChange={handleInputChange}
+          />
+        </Col>
+      ))}
     </Row>
     <Row>
-      <h2>Lista La Fuerza del Cambio: Patricia Bullrich - Luis Petri </h2>
-    </Row>
-    <Row>
-    <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>presidente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosPresidente} as="input" value={presidente} placeholder='Candidato1' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Gobernador nombre</Form.Label>
-          <Form.Control  onChange={handleVotosGobernador} as="input" value={gobernador} placeholder='gobernador' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-
-      <Col lg={4} xs={12}>
-        <Form.Group >
-          <Form.Label>Intendente nombre</Form.Label>
-          <Form.Control  onChange={handleVotosIntendentee} as="input" value={intendente} placeholder='intendente' type='number' min={0}/>
-        </Form.Group>
-      </Col>
-      
-
+    <Col lg={12} xs={12}>
+          <h2>Intendentes</h2>
+    </Col>
+    {intendente.map((intendente) => (
+      <Col lg={3} xs={12}>
+          <CandidatoItem
+            key={intendente.id}
+            candidato={intendente}
+            onInputChange={handleInputChange}
+          />
+        </Col>
+      ))}
     </Row>
     <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
