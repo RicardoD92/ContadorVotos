@@ -14,21 +14,12 @@ const Header = () => {
     <div>
       <Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"var(--light-blue)"}}>
       <Container>
-        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="/">VotAPP</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/estadisticas">Estadisticas</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Localidad</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Escuelas
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-
-            </NavDropdown>
+            <Nav.Link href="/" className="text-header">Ingreso de datos</Nav.Link>
+            <Nav.Link href="/estadisticas" className="text-header">Estadisticas</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

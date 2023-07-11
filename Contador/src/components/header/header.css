@@ -1,3 +1,12 @@
 div{
     color: black;
 }
+
+.text-header{
+    font-size: 18px;
+    color:#fff !important;
+    font-weight: 500;
+}
+.text-header:hover{
+    color:black !important;
+}
