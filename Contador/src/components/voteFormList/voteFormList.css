@@ -1,0 +1,25 @@
+.titulo{
+    font-size: 32px;
+    font-family:'PoppinsBold' !important;
+}
+.titulo2{
+    font-size: 28px;
+    font-family:'PoppinsMedium' !important;
+}
+.message-error{
+    font-size: 12px;
+    font-family:'PoppinsRegular' !important;
+    color:red;
+}
+.primary-button{
+    padding-inline: 30px;
+    background-color: var(--light-blue);
+    border-color: var(--light-blue);
+    font-family: 'PoppinsRegular';
+}
+.secondary-button{
+    padding-inline: 30px;
+    background-color: #838383;
+    border-color: #838383;
+    font-family: 'PoppinsRegular';
+}

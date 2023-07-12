@@ -3,7 +3,7 @@ import {Form, Button,Col, Row , InputGroup, Modal} from 'react-bootstrap'
 import configJson from '../../utils/config.json'
 import axios from 'axios'
 import CandidatoItem from '../candidatoItem/CandidatoItem';
-
+import './VoteFormList.css';
 
 function VoteFormList() {
     const [localidad, setLocalidad] = useState([]);
@@ -224,9 +224,8 @@ function VoteFormList() {
     <Form onSubmit={handleSubmit}>
     <Row>
       <Col lg={4} xs={12}>
-        <div>{!error.localidad && 'Campo requerido'}</div>
         <Form.Group controlId="selector1">
-          <Form.Label>Localidad</Form.Label>
+          <Form.Label style={{fontFamily: 'PoppinsBold'}}>Localidad</Form.Label>
           <Form.Control as="select"  onChange={handleSelectLocalidad} defaultValue="">
             <option disabled  value="">
                 Seleccionar localidad
@@ -236,11 +235,12 @@ function VoteFormList() {
             ))}
           </Form.Control>
         </Form.Group>
+        <div className="message-error">{!error.localidad && '* Campo requerido'}</div>
       </Col>
       <Col lg={4} xs={12}>
         <Form.Group controlId="selector2">
-          <Form.Label>Escuela</Form.Label>
-          <Form.Control as="select" onChange={handleSelectEscuela}>
+          <Form.Label style={{fontFamily: 'PoppinsBold'}}>Escuela</Form.Label>
+          <Form.Control as="select" onChange={handleSelectEscuela} defaultValue="">
             <option disabled  value="">
                 Seleccionar escuela
             </option>
@@ -249,12 +249,12 @@ function VoteFormList() {
             ))}
           </Form.Control>
         </Form.Group>
-        <div>{!error.escuela && 'Campo requerido'}</div>
+        <div className="message-error">{!error.escuela && '* Campo requerido'}</div>
       </Col>
       <Col lg={4} xs={12}>
         <Form.Group controlId="selector3">
-          <Form.Label>Mesa</Form.Label>
-          <Form.Control as="select" onChange={handleSelectMesa}>
+          <Form.Label style={{fontFamily: 'PoppinsBold'}}>Mesa</Form.Label>
+          <Form.Control as="select" onChange={handleSelectMesa} defaultValue="">
             <option disabled  value="">
                 Seleccionar mesa
             </option>
@@ -263,14 +263,14 @@ function VoteFormList() {
             ))}
           </Form.Control>
         </Form.Group>
-        <div>{!error.mesa && 'Campo requerido'}</div>
+        <div className="message-error">{!error.mesa && '* Campo requerido'}</div>
       </Col>
     </Row>
     <br></br>
     {/* ACA COmienzAN LOS INPUT de CANDIDATOS*/}
-    <Row>
+    <Row style={{marginTop: "12px"}}>
       <Col lg={12} xs={12}>
-          <h2>Presidentes</h2>
+          <div className='titulo2'>Presidentes</div>
       </Col>
     {presidente.map((presidente) => (
       <Col lg={3} xs={12}>
@@ -282,9 +282,9 @@ function VoteFormList() {
         </Col>
       ))}
     </Row>
-    <Row>
+    <Row style={{marginTop: "20px"}}>
     <Col lg={12} xs={12}>
-          <h2>Gobernadores</h2>
+          <div className='titulo2'>Gobernadores</div>
     </Col>
     {gobernador.map((gobernador) => (
       <Col lg={3} xs={12}>
@@ -296,9 +296,9 @@ function VoteFormList() {
         </Col>
       ))}
     </Row>
-    <Row>
+    <Row style={{marginTop: "20px"}}>
     <Col lg={12} xs={12}>
-          <h2>Intendentes</h2>
+          <div className='titulo2'>Intendentes</div>
     </Col>
     {intendente.map((intendente) => (
       <Col lg={3} xs={12}>
@@ -312,8 +312,8 @@ function VoteFormList() {
     </Row>
     <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
-            <Button variant="primary" type="button" onClick={handleSubmit}>
-            Submit
+            <Button variant="primary" type="button" className="primary-button" onClick={handleSubmit}>
+            Enviar
             </Button>
         </Col>
     </Row>
@@ -335,29 +335,29 @@ function VoteFormList() {
               <Col lg={2}><b>Mesa:</b> {mesaSeleccionada && mesaSeleccionada} </Col>
             </Row>
             <Row>
-              <Col lg={6}><b>Presidentes:</b> {presidente.map(presidente => 
-                  <p>{presidente.name_pres+" "+form.voto_presidente.find(presidente => presidente.id === presidente.id).cantidad_votos+" votos"}</p>
-                )}
+            <Col lg={6}><b>Presidentes:</b> {presidente.map(p => {
+                    const numVoto = form.voto_presidente ? form.voto_presidente.find(voto => voto.id_presidente === p.id)?.cantidad_votos : 0;
+                    return <p>{p.name_pres} {numVoto} votos</p>;
+                  })}
               </Col>
-              <Col lg={6}><b>Gobernadores:</b> {
-                gobernador.map(gobernador => 
-                  <p>{gobernador.name_gob+" "+form.voto_gobernador.find(gobernador => gobernador.id === gobernador.id).cantidad_votos+" votos"}</p>
-                )
-              }</Col>
-              <Col lg={6}><b>Intendentes:</b> {
-                intendente.map(intendente => 
-                  <p>{intendente.name_int+" "+form.voto_intendente.find(intendente => intendente.id === intendente.id).cantidad_votos+" votos"}</p>
-                )
-              }</Col>
+              <Col lg={6}><b>Gobernadores:</b> {gobernador.map(g => {
+                const numVoto = form.voto_gobernador ? form.voto_gobernador.find(voto => voto.id_gobernador === g.id)?.cantidad_votos : 0;
+                  return <p>{g.name_gob} {numVoto} votos</p>;
+                })}
+              </Col>
+              <Col lg={6}><b>Intendentes:</b> {intendente.map(i => {
+                const numVoto = form.voto_intendente ? form.voto_intendente.find(voto => voto.id_intendente === i.id)?.cantidad_votos : 0;
+                return <p>{i.name_int} {numVoto} votos</p>;
+              })}</Col>
             </Row>
           </Col>
         </Row>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
+        <Button variant="secondary" className="secondary-button" onClick={() => setShowModal(false)}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={postForm}>
+        <Button variant="primary" className="primary-button" onClick={postForm}>
           Enviar
         </Button>
       </Modal.Footer>

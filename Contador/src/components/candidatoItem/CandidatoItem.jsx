@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form } from 'react-bootstrap';
 
 const CandidatoItem = ({ candidato, onInputChange }) => {
   const [inputValue, setInputValue] = useState("");
@@ -19,8 +20,16 @@ const CandidatoItem = ({ candidato, onInputChange }) => {
 
   return (
     <div>
-      <p>Candidato: {candidato.name_pres ? candidato.name_pres : candidato.name_gob ? candidato.name_gob : candidato.name_int}</p>
-      <input type="number" value={inputValue} onChange={handleInputChange} />
+      <div style={{fontFamily: 'PoppinsRegular'}}><b>Candidato:</b> {candidato.name_pres ? candidato.name_pres : candidato.name_gob ? candidato.name_gob : candidato.name_int}</div>
+      <Form style={{width:"100px"}}>
+      <Form.Group controlId="numberInput">
+        <Form.Control
+          type="number"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
+    </Form>
     </div>
   );
 };

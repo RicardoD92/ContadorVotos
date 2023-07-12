@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import configJson from '../../utils/config.json';
 import {Tabs, Tab} from 'react-bootstrap'
+import  TablaEscuela from './TablaEscuela.jsx';
 
 function TableComplete() {
   const [localidades, setLocalidades] = useState([]);
@@ -39,8 +40,8 @@ function TableComplete() {
       </select>
 
       {selectedLocalidad && (
-        <div>
-          <h2>Información para la localidad seleccionada: {selectedLocalidad.nombre}</h2>
+        <div style={{paddingBottom:"150px"}}>
+          <h2>Escuelas en Localidad: {selectedLocalidad.nombre}</h2>
             <Tabs
                     defaultActiveKey="home"
                     transition={false}
@@ -49,7 +50,7 @@ function TableComplete() {
                 >
                 {escuelas.map(escuela => (
                     <Tab eventKey={escuela.id} title={escuela.nombre}>
-                        {escuela.nombre}
+                        <TablaEscuela escuela={escuela}/>
                     </Tab>
                 ))}
             </Tabs>

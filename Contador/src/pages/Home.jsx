@@ -4,14 +4,14 @@ import  VoteFormList  from '../components/voteFormList/VoteFormList.jsx'
 
 function Home() {
   return (
-    <Container>
-        <Row>
+    <Container style={{minHeight: "600px"}}>
+        <Row style={{marginBottom: "20px", marginTop: "20px"}}>
             <Col lg={12}>
-                <h1>Ingresar votos</h1>
+                <div style={{fontFamily:'PoppinsBold', fontSize: "32px"}}>Ingresar votos</div>
             </Col>
         </Row>
         <Row>
-            <Col lg={12}>
+            <Col lg={12} >
                 <VoteFormList/>
             </Col>
         </Row>
