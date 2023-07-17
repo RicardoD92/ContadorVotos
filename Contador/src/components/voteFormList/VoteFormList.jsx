@@ -3,7 +3,7 @@ import {Form, Button,Col, Row , InputGroup, Modal} from 'react-bootstrap'
 import configJson from '../../utils/config.json'
 import axios from 'axios'
 import CandidatoItem from '../candidatoItem/CandidatoItem';
-import './VoteFormList.css';
+import './voteFormList.css';
 import { useNavigate } from "react-router-dom";
 
 function VoteFormList() {
