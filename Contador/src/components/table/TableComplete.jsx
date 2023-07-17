@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import configJson from '../../utils/config.json';
-import {Tabs, Tab} from 'react-bootstrap'
+import {Tabs, Tab, Form} from 'react-bootstrap'
 import  TablaEscuela from './TablaEscuela.jsx';
 
 function TableComplete() {
@@ -30,18 +30,18 @@ function TableComplete() {
 
   return (
     <div>
-      <select value={selectedLocalidad} onChange={handleLocalidadChange}>
+      <Form.Select size='lg' aria-label="Default select example" className="mb-3" value={selectedLocalidad} onChange={handleLocalidadChange}>
         <option value="">Seleccione una localidad</option>
         {localidades.map((localidad) => (
           <option key={localidad.id} value={localidad.id}>
             {localidad.nombre}
           </option>
         ))}
-      </select>
+      </Form.Select>
 
       {selectedLocalidad && (
         <div style={{paddingBottom:"150px"}}>
-          <h2>Escuelas en Localidad: {selectedLocalidad.nombre}</h2>
+          <h2 className="mb-3">Escuelas en Localidad: {selectedLocalidad.nombre}</h2>
             <Tabs
                     defaultActiveKey="home"
                     transition={false}

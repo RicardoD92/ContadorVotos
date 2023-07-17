@@ -115,6 +115,29 @@ function TablaEscuela(props) {
                     </tbody>
                 </Table>                
             </Tab>
+            <Tab eventKey="blanco" title="Votos en Blanco / Anulados">
+            <Table striped bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Candidato</th>
+                            <th>Votos totales</th>
+                            <th>Agrupación</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Voto en Blanco</td>
+                            <td>{votos.resultado_blanco}</td>
+                            <td></td>
+                        </tr>     
+                        <tr>
+                            <td>Votos Anulados</td>
+                            <td>{votos.resultado_anulado}</td>
+                            <td></td>
+                        </tr>           
+                    </tbody>
+                </Table>                
+            </Tab>
         </Tabs>
     </>
   )

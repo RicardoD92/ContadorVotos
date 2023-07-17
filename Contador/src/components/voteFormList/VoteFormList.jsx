@@ -4,6 +4,7 @@ import configJson from '../../utils/config.json'
 import axios from 'axios'
 import CandidatoItem from '../candidatoItem/CandidatoItem';
 import './VoteFormList.css';
+import { useNavigate } from "react-router-dom";
 
 function VoteFormList() {
     const [localidad, setLocalidad] = useState([]);
@@ -18,18 +19,29 @@ function VoteFormList() {
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState(0);
     const [escuelaSeleccionada, setEscuelaSeleccionada] = useState(0);
     const [mesaSeleccionada, setMesaSeleccionada] = useState(0);
+    const [blanco, setBlanco] = useState(0);
+    const [anulado, setAnulado] = useState(0);
 
+    const navigate = useNavigate();
     // Manejo de errores
     const [error, setError] = useState(
       { 
         localidad: true,
         escuela: true,
         mesa: true,
+        formulario: true
       }
       );
       const handleShowModal = () => {
         setShowModal(true);
       };
+
+      const handleBlancoChange = (event) => {
+        setBlanco(event.target.value);
+      }
+      const handleAnuladoChange = (event) => {
+        setAnulado(event.target.value);
+      }
     const getLocalidades = async () => {
         var url = configJson.backend_url + 'localidades/';
         try{
@@ -170,9 +182,13 @@ function VoteFormList() {
       const uri = configJson.backend_url + 'votos/';
         try{
         const response = await axios.post(uri,form);
-        console.log(response);
+        setForm({});
+        navigate('/estadisticas');
         } catch(err){
-          console.log(err);
+          setError((prevError) => ({
+            ...prevError,
+            formulario: true
+          }))
         }
     }
     const handleSubmit = async (e) => {
@@ -203,7 +219,9 @@ function VoteFormList() {
             nro_mesa: mesaSeleccionada,
             voto_presidente: totalVotosPresidente,
             voto_gobernador: totalVotosGobernador,
-            voto_intendente: totalVotosIntendente
+            voto_intendente: totalVotosIntendente,
+            voto_blanco: blanco,
+            voto_anulado: anulado
 
         }
 
@@ -310,6 +328,28 @@ function VoteFormList() {
         </Col>
       ))}
     </Row>
+    <Row className='mt-5'>
+      <Col lg={3}>
+      <div className='titulo2'>Votos en blanco</div>
+        <Form.Group controlId="numberInput" style={{width:"75px"}}>
+            <Form.Control
+              type="number"
+              value={blanco}
+              onChange={handleBlancoChange}
+            />
+          </Form.Group>
+      </Col>
+      <Col lg={3}>
+      <div className='titulo2'>Votos anulados</div>
+        <Form.Group controlId="numberInput"  style={{width:"75px"}}>
+            <Form.Control
+              type="number"
+              value={anulado}
+              onChange={handleAnuladoChange}
+            />
+          </Form.Group>
+      </Col>
+    </Row>
     <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
             <Button variant="primary" type="button" className="primary-button" onClick={handleSubmit}>
@@ -350,6 +390,14 @@ function VoteFormList() {
                 return <p>{i.name_int} {numVoto} votos</p>;
               })}</Col>
             </Row>
+            <Row>
+              <Col lg={6}>
+                <p><b>Votos en blanco: </b>{blanco}</p>
+              </Col>
+              <Col lg={6}>
+                <p><b>Votos anulados: </b>{anulado}</p>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Modal.Body>
@@ -361,6 +409,7 @@ function VoteFormList() {
           Enviar
         </Button>
       </Modal.Footer>
+      <div className="message-error ml-2 pb-2">{!error.formulario && '* Error al enviar formulario. Por favor, revisa los datos o comunicate con el administrador'}</div>
     </Modal>
 
   </Form>

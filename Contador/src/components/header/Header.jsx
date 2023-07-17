@@ -19,7 +19,14 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/" className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Ingreso de datos</Nav.Link>
-            <Nav.Link href="/estadisticas" className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Estadisticas</Nav.Link>
+            <NavDropdown title=
+               {<span style={{color:"white", fontFamily:"PoppinsRegular"}}>Resultados</span>} 
+            className="text-header" style={{fontFamily:"PoppinsRegular"}}>
+              <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
+              <NavDropdown.Item href="/estadisticas-escuela">
+                Escuelas
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

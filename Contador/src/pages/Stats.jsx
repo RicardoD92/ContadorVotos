@@ -14,8 +14,12 @@ function Stats() {
       var uri = configJson.backend_url + 'votos/votos-por-agrupacion';
         axios.get(uri)
         .then(response=>{
-          console.log(response.data.data.resultadoFinalAgrupacion);
-            setVotos(response.data.data.resultadoFinalAgrupacion);
+          const data = response.data.data.resultadoFinalAgrupacion;
+          const blanco = response.data.data.voto_blanco;
+          const anulado = response.data.data.voto_anulado;
+          data.push({id:'',nombre:"Votos en blanco", votos: blanco});
+          data.push({id:'0', nombre:"Votos anulados", votos: anulado});
+          setVotos(data);
       var uri2 = configJson.backend_url + 'votos/votos-total-presidente';
         axios.get(uri2)
         .then(response=>{
@@ -58,9 +62,6 @@ function Stats() {
                   <TableVotos data={votosPresidentes} /> 
                 </Col>
               </Row>    
-            </Col>
-            <Col lg={12}>
-              <TableComplete/>
             </Col>
         </Row>
     </Container>
