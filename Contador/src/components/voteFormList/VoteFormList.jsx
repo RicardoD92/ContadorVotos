@@ -21,7 +21,7 @@ function VoteFormList() {
     const [mesaSeleccionada, setMesaSeleccionada] = useState(0);
     const [blanco, setBlanco] = useState(0);
     const [anulado, setAnulado] = useState(0);
-
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
     // Manejo de errores
     const [error, setError] = useState(
@@ -221,8 +221,8 @@ function VoteFormList() {
             voto_gobernador: totalVotosGobernador,
             voto_intendente: totalVotosIntendente,
             voto_blanco: blanco,
-            voto_anulado: anulado
-
+            voto_anulado: anulado,
+            token: token
         }
 
         setForm(form);

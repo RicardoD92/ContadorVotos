@@ -1,3 +1,4 @@
 {
-    "backend_url":"http://localhost:3002/"
+    "backend_url":"http://localhost:3002/",
+    "secret_key":"mysecretkey"
 }

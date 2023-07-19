@@ -4,7 +4,7 @@ import Header from './components/header/Header'
 import { Routes, Route } from "react-router-dom"
 import Home from './pages/Home'
 import Stats from './pages/Stats'
-import Footer from './components/footer/Footer'
+import Auth from './pages/Auth'
 import Stats_scholl from './pages/Stats_scholl'
 function App() {
   
@@ -15,6 +15,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/estadisticas" element={<Stats />} />
       <Route path="/estadisticas-escuela" element={<Stats_scholl />} />
+      <Route path="/auth" element={<Auth />} />
     </Routes>
   </>
 
