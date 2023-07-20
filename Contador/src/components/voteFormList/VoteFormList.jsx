@@ -351,7 +351,7 @@ function VoteFormList() {
     <React.Fragment key={categoryId}>
       <Col lg={12} xs={12} style={{ backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px" }}>
         {/* Renderizar el ID de agrupación o título según lo que desees mostrar */}
-        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`ID de agrupación: ${categoryId}`}</div>
+        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`${gobernadoresGroup[0].agrupacion.name}`}</div>
       </Col>
       {gobernadoresGroup.map((gobernador) => (
         <Col lg={3} xs={12} key={gobernador.id}>
@@ -372,7 +372,7 @@ function VoteFormList() {
     <React.Fragment key={categoryId}>
       <Col lg={12} xs={12} style={{ backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px" }}>
         {/* Renderizar el ID de agrupación o título según lo que desees mostrar */}
-        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`ID de agrupación: ${categoryId}`}</div>
+        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`${intendentesGroup[0].agrupacion.name}`}</div>
       </Col>
       {intendentesGroup.map((intendente) => (
         <Col lg={3} xs={12} key={intendente.id}>
