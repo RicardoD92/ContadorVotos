@@ -20,12 +20,13 @@ const CandidatoItem = ({ candidato, onInputChange }) => {
 
   return (
     <div>
-      <div style={{fontFamily: 'PoppinsRegular'}}><b>Candidato:</b> {candidato.name_pres ? candidato.name_pres : candidato.name_gob ? candidato.name_gob : candidato.name_int}</div>
-      <Form style={{width:"100px"}}>
+      <div style={{fontFamily: 'PoppinsRegular'}}><b>Candidato:</b> {candidato.name_pres ? candidato.name_pres+" - "+candidato.name_vice : candidato.name_gob ? candidato.name_gob : candidato.name_int}</div>
+      <Form style={{width:"200px"}}>
       <Form.Group controlId="numberInput">
         <Form.Control
           type="number"
           value={inputValue}
+          placeholder="Cantidad de votos"
           onChange={handleInputChange}
         />
       </Form.Group>

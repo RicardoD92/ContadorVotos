@@ -11,8 +11,11 @@ function VoteFormList() {
     const [escuela, setEscuela] = useState([]);
     const [mesa, setMesa] = useState([]);
     const [presidente, setPresidente] = useState([]);
+    const [groupedPresidentes, setGroupedPresidentes] = useState([]);
     const [gobernador, setGobernador] = useState([]);
+    const [groupedGobernadores, setGroupedGobernadores] = useState([]);
     const [intendente, setIntendente] = useState([]);
+    const [groupedIntendentes, setGroupedIntendentes] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [form, setForm] = useState({})
     // Valores seleccionados para el voto
@@ -56,7 +59,17 @@ function VoteFormList() {
       var uri= configJson.backend_url + 'politicos/todos/presidentes';
       try {
         const response = await axios.get(uri);
+        const groupedPresidentes = response.data.data.reduce((groups, pres) => {
+          const groupId = pres.id_agrupacion;
+          if (!groups[groupId]) {
+            groups[groupId] = [];
+          }
+          groups[groupId].push(pres);
+          return groups;
+        }, {});
         setPresidente(response.data.data);
+        setGroupedPresidentes(groupedPresidentes);
+
       } catch (err) {
         console.log(err);
       }
@@ -65,8 +78,17 @@ function VoteFormList() {
     const getGobernadores = async () => {
       var uri= configJson.backend_url + 'politicos/todos/gobernadores';
       try {
-        const response = await axios.get(uri);
+        const response = await axios.get(uri);        
+        const groupedGobernadores = response.data.data.reduce((groups, pres) => {
+          const groupId = pres.id_agrupacion;
+          if (!groups[groupId]) {
+            groups[groupId] = [];
+          }
+          groups[groupId].push(pres);
+          return groups;
+        }, {});
         setGobernador(response.data.data);
+        setGroupedGobernadores(groupedGobernadores);
       } catch (err) {
         console.log(err);
       }
@@ -76,7 +98,17 @@ function VoteFormList() {
       var uri= configJson.backend_url + 'politicos/todos/intendentes';
       try {
         const response = await axios.get(uri);
+        const groupedIntendentes = response.data.data.reduce((groups, pres) => {
+          const groupId = pres.id_agrupacion;
+          if (!groups[groupId]) {
+            groups[groupId] = [];
+          }
+          groups[groupId].push(pres);
+          return groups;
+        }, {});
         setIntendente(response.data.data);
+        setGroupedIntendentes(groupedIntendentes);
+        set
       } catch (err) {
         console.log(err);
       }
@@ -286,48 +318,73 @@ function VoteFormList() {
     </Row>
     <br></br>
     {/* ACA COmienzAN LOS INPUT de CANDIDATOS*/}
-    <Row style={{marginTop: "12px"}}>
+    <Row style={{ marginTop: "12px" }}>
       <Col lg={12} xs={12}>
-          <div className='titulo2'>Presidentes</div>
+        <div className='titulo2'>Presidentes</div>
       </Col>
-    {presidente.map((presidente) => (
-      <Col lg={3} xs={12}>
-          <CandidatoItem
-            key={presidente.id}
-            candidato={presidente}
-            onInputChange={handleInputChange}
-          />
-        </Col>
-      ))}
+      <Col lg={12} style={{marginTop: "12px"}}>
+        {Object.entries(groupedPresidentes).map(([groupId, presidentesGroup]) => (
+          <Row style={{marginBottom: "20px"}}> 
+            <React.Fragment key={groupId}>
+              <Col lg={12} xs={12} style={{backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px"}}>
+                {console.log("group", presidentesGroup)}
+                <div className="titulo-agrupacion" style={{fontFamily: 'PoppinsBold', fontSize: "20px"}}>{`${presidentesGroup[0].agrupacion.name}`}</div>
+              </Col>
+              {presidentesGroup.map((presidente) => (
+                <Col lg={6} xs={12} key={presidente.id}>
+                  <CandidatoItem
+                    candidato={presidente}
+                    onInputChange={handleInputChange}
+                  />
+                </Col>
+              ))}
+            </React.Fragment>  
+          </Row>
+        ))}
+      </Col>
     </Row>
-    <Row style={{marginTop: "20px"}}>
-    <Col lg={12} xs={12}>
-          <div className='titulo2'>Gobernadores</div>
-    </Col>
-    {gobernador.map((gobernador) => (
-      <Col lg={3} xs={12}>
+    <Row style={{ marginTop: "20px" }}>
+  <Col lg={12} xs={12}>
+    <div className='titulo2'>Gobernadores</div>
+  </Col>
+  {Object.entries(groupedGobernadores).map(([categoryId, gobernadoresGroup]) => (
+    <React.Fragment key={categoryId}>
+      <Col lg={12} xs={12} style={{ backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px" }}>
+        {/* Renderizar el ID de agrupación o título según lo que desees mostrar */}
+        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`ID de agrupación: ${categoryId}`}</div>
+      </Col>
+      {gobernadoresGroup.map((gobernador) => (
+        <Col lg={3} xs={12} key={gobernador.id}>
           <CandidatoItem
-            key={gobernador.id}
             candidato={gobernador}
             onInputChange={handleInputChange}
           />
         </Col>
       ))}
-    </Row>
-    <Row style={{marginTop: "20px"}}>
-    <Col lg={12} xs={12}>
-          <div className='titulo2'>Intendentes</div>
-    </Col>
-    {intendente.map((intendente) => (
-      <Col lg={3} xs={12}>
+    </React.Fragment>
+  ))}
+</Row>
+<Row style={{ marginTop: "20px" }}>
+  <Col lg={12} xs={12}>
+    <div className='titulo2'>Intendentes</div>
+  </Col>
+  {Object.entries(groupedIntendentes).map(([categoryId, intendentesGroup]) => (
+    <React.Fragment key={categoryId}>
+      <Col lg={12} xs={12} style={{ backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px" }}>
+        {/* Renderizar el ID de agrupación o título según lo que desees mostrar */}
+        <div className="titulo-agrupacion" style={{ fontFamily: 'PoppinsBold', fontSize: "20px" }}>{`ID de agrupación: ${categoryId}`}</div>
+      </Col>
+      {intendentesGroup.map((intendente) => (
+        <Col lg={3} xs={12} key={intendente.id}>
           <CandidatoItem
-            key={intendente.id}
             candidato={intendente}
             onInputChange={handleInputChange}
           />
         </Col>
       ))}
-    </Row>
+    </React.Fragment>
+  ))}
+</Row>
     <Row className='mt-5'>
       <Col lg={3}>
       <div className='titulo2'>Votos en blanco</div>
