@@ -9,6 +9,8 @@ import TableComplete from '../components/table/TableComplete.jsx'
 function Stats() {
   const [votos, setVotos] = useState([]);
   const [votosPresidentes, setVotosPresidentes] = useState([]);
+  const [votosIntendente, setVotosIntendente] = useState([]);
+  const [votosGobernador, setVotosGobernador] = useState([]);
     
     useEffect(()=>{
       var uri = configJson.backend_url + 'votos/votos-por-agrupacion';
@@ -23,12 +25,27 @@ function Stats() {
       var uri2 = configJson.backend_url + 'votos/votos-total-presidente';
         axios.get(uri2)
         .then(response=>{
-          console.log(response.data.data.resultadoFinalPresidente);
             setVotosPresidentes(response.data.data.votos);
         })
     })
     },[])
 
+    useEffect(()=>{
+      var uri = configJson.backend_url + 'votos/votos-por-gobernador';
+        axios.get(uri)
+        .then(response=>{
+            setVotosGobernador(response.data.data.votos);
+        })
+    },[])
+
+    
+    useEffect(()=>{
+      var uri = configJson.backend_url + 'votos/votos-por-intendente';
+        axios.get(uri)
+        .then(response=>{
+            setVotosGobernador(response.data.data.votos);
+        })
+    },[])
   return (
     <Container>
         <Row>
@@ -60,6 +77,32 @@ function Stats() {
                 </Col>
                 <Col lg={10}>
                   <TableVotos data={votosPresidentes} /> 
+                </Col>
+              </Row>    
+            </Col>
+            <Col lg={6}>
+              <Row>
+                <h2>Votos Gobernador</h2>
+              </Row>
+              <Row>
+                <Col lg={6} className="mb-3">
+                  <PieChart data={votosGobernador} />
+                </Col>
+                <Col lg={10}>
+                  <TableVotos data={votosGobernador} /> 
+                </Col>
+              </Row>    
+            </Col>
+            <Col lg={6}>
+              <Row>
+                <h2>Votos Intendente</h2>
+              </Row>
+              <Row>
+                <Col lg={6} className="mb-3">
+                  <PieChart data={votosIntendente} />
+                </Col>
+                <Col lg={10}>
+                  <TableVotos data={votosIntendente} /> 
                 </Col>
               </Row>    
             </Col>
