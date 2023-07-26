@@ -4,7 +4,7 @@ import axios from 'axios';
 import './header.css';
 
 import { useState, useEffect } from 'react';
-import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useJwt } from 'react-jwt';
 const Header = () => {
   const token = localStorage.getItem("token");
@@ -19,7 +19,7 @@ const Header = () => {
         setUser(true);
       }
     }
-  },[])
+  },[token, isExpired])
 
   return (
     <div>
@@ -32,6 +32,7 @@ const Header = () => {
             {user && (
               <Nav.Link href="/" className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Ingreso de datos</Nav.Link>
             )}
+            {user && (
             <NavDropdown title=
                {<span style={{color:"white", fontFamily:"PoppinsRegular"}}>Resultados</span>} 
             className="text-header" style={{fontFamily:"PoppinsRegular"}}>
@@ -40,6 +41,7 @@ const Header = () => {
                 Escuelas
               </NavDropdown.Item>
             </NavDropdown>
+            )}
           </Nav>
           <Nav className="ml-auto">
             {user ? (

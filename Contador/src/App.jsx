@@ -6,15 +6,16 @@ import Home from './pages/Home'
 import Stats from './pages/Stats'
 import Auth from './pages/Auth'
 import Stats_scholl from './pages/Stats_scholl'
+import PrivateRoute from './utils/PrivateRoute'
 function App() {
   
   return (
     <>
     <Header/>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/estadisticas" element={<Stats />} />
-      <Route path="/estadisticas-escuela" element={<Stats_scholl />} />
+      <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+      <Route path="/estadisticas" element={<PrivateRoute><Stats /></PrivateRoute>} />
+      <Route path="/estadisticas-escuela" element={<PrivateRoute><Stats_scholl /></PrivateRoute>} />
       <Route path="/auth" element={<Auth />} />
     </Routes>
   </>
