@@ -15,7 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
       <Route path="/estadisticas" element={<PrivateRoute><Stats /></PrivateRoute>} />
-      <Route path="/estadisticas-escuela" element={<PrivateRoute><Stats_scholl /></PrivateRoute>} />
+      <Route path="/estadisticas-seccion" element={<PrivateRoute><Stats_scholl /></PrivateRoute>} />
       <Route path="/auth" element={<Auth />} />
     </Routes>
   </>

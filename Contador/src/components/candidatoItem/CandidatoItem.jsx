@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 
 const CandidatoItem = ({ candidato, onInputChange }) => {
   const [inputValue, setInputValue] = useState("");
@@ -14,23 +14,31 @@ const CandidatoItem = ({ candidato, onInputChange }) => {
     } else {
         type = "intendente";
     }
-    setInputValue(newValue);
+    if (/^\d{0,3}$/.test(newValue)) {
+      setInputValue(newValue);
+    }
     onInputChange(candidato.id, newValue,type);
   };
 
   return (
     <div>
-      <div style={{fontFamily: 'PoppinsRegular'}}><b>Candidato:</b> {candidato.name_pres ? candidato.name_pres+" - "+candidato.name_vice : candidato.name_gob ? candidato.name_gob : candidato.name_int}</div>
-      <Form style={{width:"200px"}}>
-      <Form.Group controlId="numberInput">
-        <Form.Control
-          type="number"
-          value={inputValue}
-          placeholder="Cantidad de votos"
-          onChange={handleInputChange}
-        />
-      </Form.Group>
-    </Form>
+      <Row style={{marginBottom: "16px"}}>
+        <Col lg={7}>
+        <div style={{fontFamily: 'PoppinsRegular', marginBottom: "10px"}}><b>{candidato.name_pres ? candidato.name_pres+" - "+candidato.name_vice : candidato.name_gob ? candidato.name_gob : candidato.name_int} </b></div>
+        </Col>
+        <Col lg={2}>
+          <Form style={{width:"100px"}}>
+            <Form.Group controlId="numberInput">
+              <Form.Control
+                type="number"
+                value={inputValue}
+                placeholder="Votos"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
     </div>
   );
 };
