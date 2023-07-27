@@ -37,6 +37,9 @@ const Header = () => {
                {<span style={{color:"white", fontFamily:"PoppinsRegular"}}>Resultados</span>} 
             className="text-header" style={{fontFamily:"PoppinsRegular"}}>
               <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
+              <NavDropdown.Item href="/estadisticas-establecimiento">
+                Por establecimientos
+              </NavDropdown.Item>
               <NavDropdown.Item href="/estadisticas-seccion">
                 Por Secciones
               </NavDropdown.Item>
