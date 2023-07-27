@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"var(--light-blue)"}}>
+      <Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#37bbed"}}>
       <Container>
         <Navbar.Brand href="/" style={{fontFamily:'PoppinsBold', fontSize: "24px"}}>VotAPP</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
