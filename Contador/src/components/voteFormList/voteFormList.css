@@ -13,8 +13,8 @@
 }
 .primary-button{
     padding-inline: 30px;
-    background-color: var(--light-blue);
-    border-color: var(--light-blue);
+    background-color: #37bbed;
+    border-color: #37bbed;
     font-family: 'PoppinsRegular';
 }
 .secondary-button{

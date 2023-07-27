@@ -63,7 +63,7 @@ function Auth() {
               <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Ingresa tu contraseña" />
             </Form.Group>
             <div className="message-error" style={{marginLeft: "20px", marginBottom: "10px"}}>{errors.passwordWrong && '* Contraseña o usuario invalido. Intente nuevamente'}</div>
-            <Button variant="primary" type="submit" onClick={handleSubmit} style={{width: "100%", fontFamily:'PoppinsRegular', backgroundColor:"var(--light-blue)", borderColor:"var(--light-blue)"}}>
+            <Button variant="primary" type="submit" onClick={handleSubmit} style={{width: "100%", fontFamily:'PoppinsRegular', backgroundColor:"#37bbed", borderColor:"#37bbed"}}>
               Ingresar
             </Button>
           </Form>
