@@ -10,7 +10,7 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const { decodedToken, isExpired } = useJwt(token);
   const [user, setUser] = useState(false);
-  
+  console.log(user);
   useEffect(()=>{
     if(token){
       if(isExpired){
@@ -21,6 +21,71 @@ const Header = () => {
     }
   },[token, isExpired])
 
+  const setNavByUser = () => {
+    if(user){
+      const type = localStorage.getItem('type');
+      if(type === "admin"){
+        return (
+          <>
+            <Nav className="me-auto">
+              <Nav.Link href="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Nav.Link>
+              <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
+                className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
+                <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
+                <NavDropdown.Item href="/estadisticas-establecimiento">
+                  Por establecimientos
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/estadisticas-seccion">
+                  Por Secciones
+                </NavDropdown.Item>
+              </NavDropdown>
+              </Nav><Nav className="ml-auto">
+              <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
+            </Nav></>
+        );
+        } else if(type === "carga") {
+          return (
+            <>
+              <Nav className="me-auto">
+                <Nav.Link href="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Nav.Link>
+              </Nav>
+              <Nav className="ml-auto">
+                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
+              </Nav>
+            </>
+          );
+        } else if(type === "resultado"){
+          return (
+            <>
+              <Nav className="me-auto">
+                <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
+                  className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
+                  <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
+                  <NavDropdown.Item href="/estadisticas-establecimiento">
+                    Por establecimientos
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/estadisticas-seccion">
+                    Por Secciones
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+              <Nav className="ml-auto">
+                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
+              </Nav>
+            </>
+          );
+        }
+    } else {
+      return (
+        <>
+          <Nav className="me-auto">
+              <Nav.Link href="/auth" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Iniciar Sesión</Nav.Link>
+          </Nav>
+        </>
+      )
+    }
+  }
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#37bbed"}}>
@@ -28,29 +93,7 @@ const Header = () => {
         <Navbar.Brand href="/" style={{fontFamily:'PoppinsBold', fontSize: "24px"}}>VotAPP</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {user && (
-              <Nav.Link href="/" className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Ingreso de datos</Nav.Link>
-            )}
-            {user && (
-            <NavDropdown title=
-               {<span style={{color:"white", fontFamily:"PoppinsRegular"}}>Resultados</span>} 
-            className="text-header" style={{fontFamily:"PoppinsRegular"}}>
-              <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
-              <NavDropdown.Item href="/estadisticas-establecimiento">
-                Por establecimientos
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/estadisticas-seccion">
-                Por Secciones
-              </NavDropdown.Item>
-            </NavDropdown>
-            )}
-          </Nav>
-          <Nav className="ml-auto">
-            {user ? (
-              <Nav.Link onClick={() => {localStorage.removeItem('token'); window.location.reload()}} className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Salir</Nav.Link>
-            ) : <Nav.Link href="/auth" className="text-header" style={{fontFamily:'PoppinsRegular', fontSize: "18px"}}>Iniciar Sesión</Nav.Link>}
-          </Nav>
+          { setNavByUser() }
         </Navbar.Collapse>
       </Container>
     </Navbar>

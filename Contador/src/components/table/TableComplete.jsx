@@ -10,7 +10,9 @@ function TableComplete() {
   const [localidades, setLocalidades] = useState([]);
   const [escuelas, setEscuela] = useState([]);
   const [selectedLocalidad, setSelectedLocalidad] = useState('');
+  const [selectedEscuela, setSelectedEscuela] = useState('');
   const [votos, setVotos] = useState([]);
+  const [votosEscuela, setVotosEscuela] = useState([]);
 
   useEffect(() => {
     var uri = configJson.backend_url + 'localidades/';
@@ -22,14 +24,13 @@ function TableComplete() {
   const requestVotosForLocalidad = (id) => {
     var uri = configJson.backend_url + 'votos/voto-por-localidad/' + id;
     axios.get(uri).then((response) => {
-      var info = response.data.data.resultado_presidente;
+      var info = response.data.data.resultado_intendente;
       setVotos(info);
     });
   }
   const handleLocalidadChange = (event) => {
     const selectedId = event.target.value;
     const selectedLoc = localidades.find((item) => Number(item.id) === Number(selectedId));
-    console.log("sele", selectedLoc)
     setSelectedLocalidad(selectedLoc);
 
     var uri = configJson.backend_url + 'escuelas/' + selectedLoc.id;
@@ -38,6 +39,22 @@ function TableComplete() {
     })
     requestVotosForLocalidad(selectedId);
   };
+  const handleSelectedEscuela = (event) => {
+    const selectedId = event.target.value;
+    const selectedEsc = escuelas.find((item) => Number(item.id) === Number(selectedId));
+    setSelectedEscuela(selectedEsc);
+    getVotosPorEscuela(selectedId);
+  }
+  const getVotosPorEscuela = (id) => {
+    var uri = configJson.backend_url + 'votos/voto-por-escuela/' + id;
+    axios.get(uri)
+        .then(response => {
+          setVotosEscuela(response.data.data);                
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
 
   return (
     <div>
@@ -60,7 +77,7 @@ function TableComplete() {
               <PieChart data={votos}/>
             </Col>
             <Col lg={8}>
-              <TableVotos data={votos}/>
+              <TableVotos data={votos} int={true} />
             </Col>
           </Row>
           <Row>
@@ -68,19 +85,20 @@ function TableComplete() {
               <h2>Votos por establecimiento en la localidad</h2>
             </Col>
             <Col lg={12}>
-              <Tabs
-                      defaultActiveKey="home"
-                      transition={false}
-                      id="noanim-tab-example"
-                      className="mb-3"
-                  >
-                  {escuelas.map(escuela => (
-                      <Tab eventKey={escuela.id} title={escuela.nombre}>
-                          <TablaEscuela escuela={escuela}/>
-                      </Tab>
-                  ))}
-              </Tabs>
-              </Col>
+            <Form.Select size='lg' aria-label="Default select example" className="mb-3" value={selectedEscuela} onChange={handleSelectedEscuela}>
+              <option value="">Seleccione un establecimiento</option>
+              {escuelas.map((escuela) => (
+                <option key={escuela.id} value={escuela.id}>
+                  {escuela.nombre}
+                </option>
+              ))}
+            </Form.Select>
+            </Col>
+            <Col lg={12}>
+              {selectedEscuela && (
+                <TablaEscuela escuela={selectedEscuela} votos={votosEscuela} />
+              )}
+            </Col>
             </Row>
         </div>
       )}

@@ -33,6 +33,8 @@ function TablaEscuela(props) {
                             <th>Candidato</th>
                             <th>Votos totales</th>
                             <th>Agrupación</th>
+                            <th>Porcentaje Total</th>
+                            <th>Porcentaje Interno</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -40,12 +42,14 @@ function TablaEscuela(props) {
  
 
                     //SOLO LO MUESTRO SI HAY RESULTADO
-                    votos.resultado_presidente && votos.resultado_presidente.length > 0 ? (
-                    votos.resultado_presidente.map( pres => (
+                    props.votos.resultado_presidente && props.votos.resultado_presidente.length > 0 ? (
+                        props.votos.resultado_presidente.map( pres => (
                         <tr>
                             <td>{pres.nombre}</td>
                             <td>{pres.votos}</td>
                             <td>{pres.agrupacion}</td>
+                            <td>{pres.porcentaje}</td>
+                            <td>{pres.porcentaje_interno}</td>
                         </tr>
                     ))) : 
                         <tr>
@@ -65,17 +69,21 @@ function TablaEscuela(props) {
                             <th>Candidato</th>
                             <th>Votos totales</th>
                             <th>Agrupación</th>
+                            <th>Porcentaje Total</th>
+                            <th>Porcentaje Interno</th>
                           </tr>
                         </thead>
                         <tbody>
                 {
                     //SOLO LO MUESTRO SI HAY RESULTADO
-                    votos.resultado_gobernador && votos.resultado_gobernador.length > 0 ? (
-                    votos.resultado_gobernador.map( pres => (
+                    props.votos.resultado_gobernador && props.votos.resultado_gobernador.length > 0 ? (
+                        props.votos.resultado_gobernador.map( pres => (
                         <tr>
                         <td>{pres.nombre}</td>
                         <td>{pres.votos}</td>
                         <td>{pres.agrupacion}</td>
+                        <td>{pres.porcentaje}</td>
+                        <td>{pres.porcentaje_interno}</td>
                     </tr>
                     ))): 
                     <tr>
@@ -94,17 +102,21 @@ function TablaEscuela(props) {
                             <th>Candidato</th>
                             <th>Votos totales</th>
                             <th>Agrupación</th>
+                            <th>Porcentaje Total</th>
+                            <th>Porcentaje Interno</th>
                           </tr>
                         </thead>
                         <tbody>
                 {
                     //SOLO LO MUESTRO SI HAY RESULTADO
-                    votos.resultado_intendente && votos.resultado_intendente.length > 0 ? (
-                    votos.resultado_intendente.map( pres => (
+                    props.votos.resultado_intendente && props.votos.resultado_intendente.length > 0 ? (
+                        props.votos.resultado_intendente.map( pres => (
                         <tr>
                             <td>{pres.nombre}</td>
                             <td>{pres.votos}</td>
                             <td>{pres.agrupacion}</td>
+                            <td>{pres.porcentaje}</td>
+                            <td>{pres.porcentaje_interno}</td>
                         </tr>                    ))): 
                         <tr>
                             <td>Aún no hay información agregada</td>
@@ -115,7 +127,7 @@ function TablaEscuela(props) {
                     </tbody>
                 </Table>                
             </Tab>
-            <Tab eventKey="blanco" title="Votos en Blanco / Anulados">
+            <Tab eventKey="blanco" title="Total de votantes">
             <Table striped bordered hover>
                         <thead>
                           <tr>
@@ -136,9 +148,11 @@ function TablaEscuela(props) {
                             <td></td>
                         </tr>           
                     </tbody>
-                </Table>                
+                </Table>
             </Tab>
         </Tabs>
+        <p>Total de votantes: {votos.resultado_blanco}</p>               
+        <p>Total de sobres: {votos.resultado_anulado}</p> 
     </>
   )
 }

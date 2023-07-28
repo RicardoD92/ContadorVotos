@@ -5,10 +5,12 @@ import axios from 'axios'
 import CandidatoItem from '../candidatoItem/CandidatoItem';
 import './voteFormList.css';
 import { useNavigate } from "react-router-dom";
+import Toast from 'react-bootstrap/Toast';
 
 function VoteFormList() {
     const [localidad, setLocalidad] = useState([]);
     const [escuela, setEscuela] = useState([]);
+    const [showToast, setShowToast] = useState(false);
     const [mesa, setMesa] = useState([]);
     const [presidente, setPresidente] = useState([]);
     const [groupedPresidentes, setGroupedPresidentes] = useState([]);
@@ -26,6 +28,8 @@ function VoteFormList() {
     const [anulado, setAnulado] = useState(0);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+
+
     // Manejo de errores
     const [error, setError] = useState(
       { 
@@ -38,7 +42,9 @@ function VoteFormList() {
       const handleShowModal = () => {
         setShowModal(true);
       };
-
+      const showSuccessToast = () => {
+        setShowToast(true);
+      };
       const handleBlancoChange = (event) => {
         setBlanco(event.target.value);
       }
@@ -215,8 +221,12 @@ function VoteFormList() {
         try{
         const response = await axios.post(uri,form);
         setForm({});
-        navigate('/estadisticas');
-        } catch(err){
+        setShowModal(false);
+        showSuccessToast();
+        setTimeout(() => {
+          window.location.reload(); // Refresca la página
+        }, 3000); 
+              } catch(err){
           setError((prevError) => ({
             ...prevError,
             formulario: true
@@ -387,7 +397,7 @@ function VoteFormList() {
 </Row>
     <Row className='mt-5'>
       <Col lg={3}>
-      <div className='titulo2'>Votos en blanco</div>
+      <div className='titulo2'>Total de votantes</div>
         <Form.Group controlId="numberInput" style={{width:"75px"}}>
             <Form.Control
               type="number"
@@ -397,7 +407,7 @@ function VoteFormList() {
           </Form.Group>
       </Col>
       <Col lg={3}>
-      <div className='titulo2'>Votos anulados</div>
+      <div className='titulo2'>Total de sobres</div>
         <Form.Group controlId="numberInput"  style={{width:"75px"}}>
             <Form.Control
               type="number"
@@ -449,10 +459,10 @@ function VoteFormList() {
             </Row>
             <Row>
               <Col lg={6}>
-                <p><b>Votos en blanco: </b>{blanco}</p>
+                <p><b>Total de votantes: </b>{blanco}</p>
               </Col>
               <Col lg={6}>
-                <p><b>Votos anulados: </b>{anulado}</p>
+                <p><b>Total de sobres: </b>{anulado}</p>
               </Col>
             </Row>
           </Col>
@@ -468,7 +478,22 @@ function VoteFormList() {
       </Modal.Footer>
       <div className="message-error ml-2 pb-2">{!error.formulario && '* Error al enviar formulario. Por favor, revisa los datos o comunicate con el administrador'}</div>
     </Modal>
-
+    <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        delay={5000} // Duración en milisegundos que permanecerá visible el toast
+        autohide
+        className='bg-success'
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          minWidth: '200px',
+          paddingInline: '20px',
+        }}
+      >
+        <Toast.Body style={{color: "white", fontFamily: 'PoppinsRegular'}}>Los votos fueron cargados correctamente!</Toast.Body>
+      </Toast>
   </Form>
   )
 }

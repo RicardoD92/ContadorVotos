@@ -17,6 +17,7 @@ function Auth() {
            const { decodedToken, isExpired } = useJwt(token);
            if(isExpired){
                localStorage.removeItem('token');
+               localStorage.removeItem('type');
            } else {
                 navigate('/')
            }
@@ -32,6 +33,7 @@ function Auth() {
         const result = await axios.post(configJson.backend_url + 'auth/login', form);
         if(result.data.code===200){
             localStorage.setItem("token", result.data.data.token);
+            localStorage.setItem("type", result.data.data.type);
             setErrors({
                 passwordWrong: false
             })
@@ -44,10 +46,6 @@ function Auth() {
       }
     }
     
-    useEffect( ()=>{
-       
-    },[])
-
   return (
     <Container>
       <Row className="justify-content-center">

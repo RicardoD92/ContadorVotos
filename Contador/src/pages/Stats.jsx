@@ -19,8 +19,8 @@ function Stats() {
           const data = response.data.data.resultadoFinalAgrupacion;
           const blanco = response.data.data.voto_blanco;
           const anulado = response.data.data.voto_anulado;
-          data.push({id:'',nombre:"Votos en blanco", votos: blanco});
-          data.push({id:'0', nombre:"Votos anulados", votos: anulado});
+          data.push({id:'',nombre:"Total votantes", votos: blanco});
+          data.push({id:'0', nombre:"Total de sobres", votos: anulado});
           setVotos(data);
       var uri2 = configJson.backend_url + 'votos/votos-total-presidente';
         axios.get(uri2)
@@ -43,7 +43,7 @@ function Stats() {
       var uri = configJson.backend_url + 'votos/votos-por-intendente';
         axios.get(uri)
         .then(response=>{
-            setVotosGobernador(response.data.data.votos);
+            setVotosIntendente(response.data.data.votos);
         })
     },[])
   return (
@@ -76,7 +76,7 @@ function Stats() {
                   <PieChart data={votosPresidentes} />
                 </Col>
                 <Col lg={10}>
-                  <TableVotos data={votosPresidentes} /> 
+                  <TableVotos data={votosPresidentes} int={true}/> 
                 </Col>
               </Row>    
             </Col>
@@ -89,7 +89,7 @@ function Stats() {
                   <PieChart data={votosGobernador} />
                 </Col>
                 <Col lg={10}>
-                  <TableVotos data={votosGobernador} /> 
+                  <TableVotos data={votosGobernador} int={true} /> 
                 </Col>
               </Row>    
             </Col>
@@ -102,7 +102,7 @@ function Stats() {
                   <PieChart data={votosIntendente} />
                 </Col>
                 <Col lg={10}>
-                  <TableVotos data={votosIntendente} /> 
+                  <TableVotos data={votosIntendente} int={true} /> 
                 </Col>
               </Row>    
             </Col>
