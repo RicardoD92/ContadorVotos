@@ -6,8 +6,21 @@ div{
     font-size: 18px;
     color:#fff !important;
     font-weight: 500;
+    text-decoration: none;
 }
 .text-header:hover{
     font-family: "PoppinsBold" !important;
-    color:black !important;
+    color:white !important;
+    text-decoration: none;
+}
+
+.navOption{
+    text-decoration: none;
+    font-family: "PoppinsRegular" !important;
+    color: black;
+}
+.navOption:hover{
+    text-decoration: none;
+    font-family: "PoppinsBold" !important;
+    color: black;
 }

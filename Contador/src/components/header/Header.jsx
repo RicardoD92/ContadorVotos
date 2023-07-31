@@ -1,18 +1,17 @@
 import React from 'react';
-import axios from 'axios';
 import { useHeaderContext } from '../../utils/headerContext';
-
 import './header.css';
-
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useJwt } from 'react-jwt';
+import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const token = localStorage.getItem("token");
   const { decodedToken, isExpired } = useJwt(token);
   const [user, setUser] = useState(false);
   const { headerState, setHeaderState } = useHeaderContext();
-
+  const navigate = useNavigate();
   useEffect(()=>{
     if(token){
       if(isExpired){
@@ -22,69 +21,83 @@ const Header = () => {
       }
     }
   },[token, isExpired])
-
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setHeaderState(false);
+    navigate('/auth');
+  };
   const setNavByUser = () => {
-    if(headerState){
+    if (headerState) {
       const type = localStorage.getItem('type');
-      if(type === "admin"){
+      if (type === "admin") {
         return (
           <>
             <Nav className="me-auto">
-              <Nav.Link href="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Nav.Link>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <Link to="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Link>
+              </div>
               <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
                 className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
-                <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
-                <NavDropdown.Item href="/estadisticas-establecimiento">
+                <Link className="navOption" to="/estadisticas">Totales</Link><br/>
+                <Link className="navOption" to="/estadisticas-establecimiento">
                   Por establecimientos
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/estadisticas-seccion">
+                </Link><br/>
+                <Link className="navOption" to="/estadisticas-seccion">
                   Por Secciones
-                </NavDropdown.Item>
+                </Link><br/>
               </NavDropdown>
-              </Nav><Nav className="ml-auto">
-              <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
-            </Nav></>
+            </Nav>
+            <Nav className="ml-auto">
+              <span onClick={handleLogout} className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px", cursor: "pointer" }}>
+                Salir
+              </span>
+            </Nav>
+          </>
         );
-        } else if(type === "carga") {
-          return (
-            <>
-              <Nav className="me-auto">
-                <Nav.Link href="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Nav.Link>
-              </Nav>
-              <Nav className="ml-auto">
-                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); setHeaderState(false); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
-              </Nav>
-            </>
-          );
-        } else if(type === "resultado"){
-          return (
-            <>
-              <Nav className="me-auto">
-                <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
-                  className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
-                  <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
-                  <NavDropdown.Item href="/estadisticas-establecimiento">
-                    Por Establecimientos
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/estadisticas-seccion">
-                    Por Secciones
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/estadisticas-mesa">
-                    Por Mesas
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-              <Nav className="ml-auto">
-                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload();  setHeaderState(false);} } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
-              </Nav>
-            </>
-          );
-        }
+      } else if (type === "carga") {
+        return (
+          <>
+            <Nav className="me-auto">
+              <Link to="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Link>
+            </Nav>
+            <Nav className="ml-auto">
+              <span onClick={handleLogout} className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px", cursor: "pointer" }}>
+                Salir
+              </span>
+            </Nav>
+          </>
+        );
+      } else if (type === "resultado") {
+        return (
+          <>
+            <Nav className="me-auto">
+              <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
+                className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
+                <Link className="navOption" to="/estadisticas">Totales</Link>
+                <Link className="navOption" to="/estadisticas-establecimiento">
+                  Por Establecimientos
+                </Link><br/>
+                <Link className="navOption" to="/estadisticas-seccion">
+                  Por Secciones
+                </Link><br/>
+                <Link className="navOption" to="/estadisticas-mesa">
+                  Por Mesas
+                </Link><br/>
+              </NavDropdown>
+            </Nav>
+            <Nav className="ml-auto">
+              <span onClick={handleLogout} className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px", cursor: "pointer" }}>
+                Salir
+              </span>
+            </Nav>
+          </>
+        );
+      }
     } else {
       return (
         <>
           <Nav className="me-auto">
-              <Nav.Link href="/auth" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Iniciar Sesión</Nav.Link>
+            <Link to="/auth" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Iniciar Sesión</Link>
           </Nav>
         </>
       )
