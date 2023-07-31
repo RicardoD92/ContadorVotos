@@ -9,11 +9,11 @@ import { HeaderContextProvider } from './utils/headerContext.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Suspense fallback="loading">
-    <HeaderContextProvider>
       <BrowserRouter>
+      <HeaderContextProvider>
         <App />
+        </HeaderContextProvider>
       </BrowserRouter>
-      </HeaderContextProvider>
     </Suspense>
   </React.StrictMode>,
 )
