@@ -61,10 +61,13 @@ const Header = () => {
                   className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
                   <NavDropdown.Item href="/estadisticas">Totales</NavDropdown.Item>
                   <NavDropdown.Item href="/estadisticas-establecimiento">
-                    Por establecimientos
+                    Por Establecimientos
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/estadisticas-seccion">
                     Por Secciones
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/estadisticas-mesa">
+                    Por Mesas
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
