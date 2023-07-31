@@ -4,6 +4,7 @@ import axios from 'axios'
 import configJson from '../utils/config.json'
 import { useNavigate } from 'react-router-dom'
 import { useJwt } from 'react-jwt'
+import { useHeaderContext } from '../utils/headerContext';
 
 function Auth() {
     const [username, setUsername] = useState('');
@@ -12,6 +13,8 @@ function Auth() {
         passwordWrong: false
     });
     const navigate = useNavigate();
+    const { setHeaderState } = useHeaderContext();
+
     const token = localStorage.getItem("token");
        if(token){
            const { decodedToken, isExpired } = useJwt(token);
@@ -37,6 +40,7 @@ function Auth() {
             setErrors({
                 passwordWrong: false
             })
+            setHeaderState(true);
             if(username === 'ingresante'){
                 navigate('/')
             } else if(username === 'resultado'){

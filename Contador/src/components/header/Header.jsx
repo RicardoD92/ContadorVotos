@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { useHeaderContext } from '../../utils/headerContext';
 
 import './header.css';
 
@@ -10,6 +11,8 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const { decodedToken, isExpired } = useJwt(token);
   const [user, setUser] = useState(false);
+  const { headerState, setHeaderState } = useHeaderContext();
+
   useEffect(()=>{
     if(token){
       if(isExpired){
@@ -21,7 +24,7 @@ const Header = () => {
   },[token, isExpired])
 
   const setNavByUser = () => {
-    if(user){
+    if(headerState){
       const type = localStorage.getItem('type');
       if(type === "admin"){
         return (
@@ -49,7 +52,7 @@ const Header = () => {
                 <Nav.Link href="/" className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Ingreso de datos</Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
+                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); setHeaderState(false); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
               </Nav>
             </>
           );
@@ -72,7 +75,7 @@ const Header = () => {
                 </NavDropdown>
               </Nav>
               <Nav className="ml-auto">
-                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload(); } } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
+                <Nav.Link onClick={() => { localStorage.removeItem('token'); window.location.reload();  setHeaderState(false);} } className="text-header" style={{ fontFamily: 'PoppinsRegular', fontSize: "18px" }}>Salir</Nav.Link>
               </Nav>
             </>
           );
