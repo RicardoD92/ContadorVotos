@@ -10,7 +10,6 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const { decodedToken, isExpired } = useJwt(token);
   const [user, setUser] = useState(false);
-  console.log(user);
   useEffect(()=>{
     if(token){
       if(isExpired){

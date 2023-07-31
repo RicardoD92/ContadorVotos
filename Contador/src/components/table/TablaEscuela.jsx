@@ -138,12 +138,12 @@ function TablaEscuela(props) {
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Voto en Blanco</td>
+                            <td>Total de votantes</td>
                             <td>{votos.resultado_blanco}</td>
                             <td></td>
                         </tr>     
                         <tr>
-                            <td>Votos Anulados</td>
+                            <td>Total de sobres</td>
                             <td>{votos.resultado_anulado}</td>
                             <td></td>
                         </tr>           

@@ -37,7 +37,13 @@ function Auth() {
             setErrors({
                 passwordWrong: false
             })
-            navigate('/')
+            if(username === 'ingresante'){
+                navigate('/')
+            } else if(username === 'resultado'){
+                navigate('/estadisticas')
+            } else if(username === 'admin'){
+                navigate('/estadisticas')
+            }
         }
     }catch(e){
         setErrors({
