@@ -163,6 +163,7 @@ function VoteFormList() {
     }
     const handleSelectLocalidad = (e) => {
         setLocalidadSeleccionada(Number(e.target.value));
+        setEscuelaSeleccionada(0);
         setError((prevError) => ({
           ...prevError,
           localidad: true
