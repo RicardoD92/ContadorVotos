@@ -24,3 +24,7 @@ div{
     font-family: "PoppinsBold" !important;
     color: black;
 }
+.dropdown-menu{
+    width: 210px;
+    padding: 14px;
+}

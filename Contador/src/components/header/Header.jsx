@@ -87,7 +87,7 @@ const Header = () => {
             <Nav className="me-auto">
               <NavDropdown title={<span style={{ color: "white", fontFamily: "PoppinsRegular" }}>Resultados</span>}
                 className="text-header" style={{ fontFamily: "PoppinsRegular" }}>
-                <Link className="navOption" to="/estadisticas">Totales</Link>
+                <Link className="navOption" to="/estadisticas">Totales</Link><br/>
                 <Link className="navOption" to="/estadisticas-establecimiento">
                   Por Establecimientos
                 </Link><br/>

@@ -19,10 +19,11 @@ const TableVotos = ({ data, int }) => {
       <tbody>
         {data.map(item => (
           <tr key={item.id}>
+            {console.log(item)}
             <td>{item.nombre}</td>
             <td>{item.votos}</td>
-            <td>{item.porcentaje==="Infinity" ? "" : item.porcentaje+"%"}</td>
-            {int && <td>{item.porcentaje_interno}%</td>}
+            <td>{item.porcentaje === "Infinity" || typeof item.porcentaje === "undefined" ? "" : item.porcentaje + "%"}</td>
+            {int && <td> {item.porcentaje_interno>0 ? item.porcentaje_interno+"%" : ""} </td>}
           </tr>
         ))}
       </tbody>
