@@ -48,7 +48,7 @@ function TablaEscuela(props) {
                             <td>{pres.nombre}</td>
                             <td>{pres.votos}</td>
                             <td>{pres.agrupacion}</td>
-                            <td>{pres.porcentaje}</td>
+                            <td>{pres.porcentaje==="Infinity" ? "" : pres.porcentaje}</td>
                             <td>{pres.porcentaje_interno}</td>
                         </tr>
                     ))) : 
@@ -82,7 +82,7 @@ function TablaEscuela(props) {
                         <td>{pres.nombre}</td>
                         <td>{pres.votos}</td>
                         <td>{pres.agrupacion}</td>
-                        <td>{pres.porcentaje}</td>
+                        <td>{pres.porcentaje==="Infinity" ? "" : pres.porcentaje}</td>
                         <td>{pres.porcentaje_interno}</td>
                     </tr>
                     ))): 
@@ -115,7 +115,7 @@ function TablaEscuela(props) {
                             <td>{pres.nombre}</td>
                             <td>{pres.votos}</td>
                             <td>{pres.agrupacion}</td>
-                            <td>{pres.porcentaje}</td>
+                            <td>{pres.porcentaje==="Infinity" ? "" : pres.porcentaje}</td>
                             <td>{pres.porcentaje_interno}</td>
                         </tr>                    ))): 
                         <tr>
