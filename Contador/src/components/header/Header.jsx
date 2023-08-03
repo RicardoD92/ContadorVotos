@@ -45,6 +45,9 @@ const Header = () => {
                 <Link className="navOption" to="/estadisticas-seccion">
                   Por Secciones
                 </Link><br/>
+                <Link className="navOption" to="/estadisticas-mesa">
+                  Por Mesa
+                </Link><br/>
               </NavDropdown>
             </Nav>
             <Nav className="ml-auto">

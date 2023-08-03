@@ -16,6 +16,7 @@ function TablaPorMesa() {
   const [votosSection, setVotosSection] = useState([]);
   const [votosGob, setVotosGob] = useState([]);
   const [votosInt, setVotosInt] = useState([]);
+  const [totales, setTotales] = useState([]);
 
   useEffect(() => {
     var uri = configJson.backend_url + 'localidades/';
@@ -57,6 +58,7 @@ function TablaPorMesa() {
     var selectedMesa = event.target.value;
     const uri = configJson.backend_url + 'votos/voto-por-mesa/' + selectedMesa;
     const res = axios.get(uri).then((response) => {
+      setTotales(response.data.data);
         setVotosSection(response.data.data.resultado_presidente);
         setVotosGob(response.data.data.resultado_gobernador);
         setVotosInt(response.data.data.resultado_intendente);
@@ -121,6 +123,8 @@ function TablaPorMesa() {
           <Col lg={12}>
             {votosSection.length>0 ? (
                 <div>
+                  <span style={{fontSize:"20px"}}><b>Total de votantes: </b>{totales.resultado_blanco} </span><br></br>
+                  <span style={{fontSize:"20px"}}><b>Total de sobres: </b>{totales.resultado_anulado} </span>
                     <h2>Presidente</h2>
                     <TableVotos data={votosSection} int={true} />
                     <h2>Gobernador</h2>

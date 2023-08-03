@@ -21,7 +21,7 @@ const TableVotos = ({ data, int }) => {
           <tr key={item.id}>
             <td>{item.nombre}</td>
             <td>{item.votos}</td>
-            <td>{item.porcentaje}%</td>
+            <td>{item.porcentaje==="Infinity" ? "" : item.porcentaje+"%"}</td>
             {int && <td>{item.porcentaje_interno}%</td>}
           </tr>
         ))}
