@@ -6,21 +6,32 @@ import { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useJwt } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
+
 const Header = () => {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState('');
   const { decodedToken, isExpired } = useJwt(token);
   const [user, setUser] = useState(false);
   const { headerState, setHeaderState } = useHeaderContext();
   const navigate = useNavigate();
-  useEffect(()=>{
+ 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setToken(token);
+  },[]);
+
+  useEffect(() => {
     if(token){
-      if(isExpired){
-        setUser(false);
-      } else {
-        setUser(true);
+      setHeaderState(true);
+      const currentDate = Date.now() / 1000;
+      console.log(currentDate)
+      if(currentDate > localStorage.getItem('expire_token_in')){
+        setHeaderState(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('type');
       }
     }
-  },[token, isExpired])
+  },[token]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setHeaderState(false);

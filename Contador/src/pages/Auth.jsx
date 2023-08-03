@@ -36,6 +36,9 @@ function Auth() {
         const result = await axios.post(configJson.backend_url + 'auth/login', form);
         if(result.data.code===200){
             localStorage.setItem("token", result.data.data.token);
+            const currentDate = Date.now();
+            const expirationDate = currentDate + 43200 * 1000;
+            localStorage.setItem("expire_token_in", expirationDate / 1000);
             localStorage.setItem("type", result.data.data.type);
             setErrors({
                 passwordWrong: false
