@@ -163,6 +163,7 @@ function VoteFormList() {
     }
     const handleSelectLocalidad = (e) => {
         setLocalidadSeleccionada(Number(e.target.value));
+        setMesa([]);
         setEscuelaSeleccionada(0);
         setError((prevError) => ({
           ...prevError,
@@ -397,8 +398,8 @@ function VoteFormList() {
   ))}
 </Row>
     <Row className='mt-5'>
-      <Col lg={3}>
-      <div className='titulo2'>Total de votantes</div>
+      <Col lg={5}>
+      <div className='titulo2'>Votos válidos (Intendente)</div>
         <Form.Group controlId="numberInput" style={{width:"75px"}}>
             <Form.Control
               type="number"
