@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useJwt } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = () => {
   const [token, setToken] = useState('');
@@ -14,6 +15,26 @@ const Header = () => {
   const { headerState, setHeaderState } = useHeaderContext();
   const navigate = useNavigate();
  
+  const handleDownload = async () => {
+    try {
+      const response = await axios.get('http://http://45.229.251.93:3002/votos/descargar-votos', {
+        responseType: 'blob', // Importante: indicar que la respuesta es un archivo blob
+      });
+
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = URL.createObjectURL(blob);
+
+      // Simular el clic en el enlace para iniciar la descarga
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Elecciones2023.xlsx'; // Cambiar el nombre del archivo según sea necesario
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error al descargar el archivo', error);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     setToken(token);
@@ -59,6 +80,7 @@ const Header = () => {
                 <Link className="navOption" to="/estadisticas-mesa">
                   Por Mesa
                 </Link><br/>
+                <Link className="navOption" to="/" onClick={handleDownload}>Descargar resultados</Link>
               </NavDropdown>
             </Nav>
             <Nav className="ml-auto">
@@ -97,6 +119,7 @@ const Header = () => {
                 <Link className="navOption" to="/estadisticas-mesa">
                   Por Mesas
                 </Link><br/>
+                <Link className="navOption" to="/" onClick={handleDownload}>Descargar resultados</Link>
               </NavDropdown>
             </Nav>
             <Nav className="ml-auto">
