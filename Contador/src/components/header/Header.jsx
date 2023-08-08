@@ -17,7 +17,7 @@ const Header = () => {
  
   const handleDownload = async () => {
     try {
-      const response = await axios.get('http://http://45.229.251.93:3002/votos/descargar-votos', {
+      const response = await axios.get('http://45.229.251.93:3002/votos/descargar-votos', {
         responseType: 'blob', // Importante: indicar que la respuesta es un archivo blob
       });
 
