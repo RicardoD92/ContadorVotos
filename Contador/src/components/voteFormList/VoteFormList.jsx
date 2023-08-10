@@ -172,7 +172,7 @@ function VoteFormList() {
         getEscuelas(e.target.value);
     }
     const handleSelectEscuela = (e) => {
-        var escuela = JSON.parse(event.target.value);
+        var escuela = JSON.parse(e.target.value);
         setEscuelaSeleccionada(escuela.id);
         setError((prevError) => ({
           ...prevError,
@@ -302,8 +302,8 @@ function VoteFormList() {
       <Col lg={4} xs={12}>
         <Form.Group controlId="selector2">
           <Form.Label style={{fontFamily: 'PoppinsBold'}}>Escuela</Form.Label>
-          <Form.Control as="select" onChange={handleSelectEscuela} defaultValue="">
-            <option disabled  value="">
+          <Form.Control as="select" onChange={handleSelectEscuela} defaultValue="" value={escuelaSeleccionada ? escuelaSeleccionada : ''}>
+            <option disabled  value="" key="">
                 Seleccionar escuela
             </option>
             {escuela.map(escuela => (
@@ -317,7 +317,7 @@ function VoteFormList() {
         <Form.Group controlId="selector3">
           <Form.Label style={{fontFamily: 'PoppinsBold'}}>Mesa</Form.Label>
           <Form.Control as="select" onChange={handleSelectMesa} defaultValue="">
-            <option disabled  value="">
+            <option  key={0} value="0">
                 Seleccionar mesa
             </option>
             {mesa.map(mesa => (
@@ -326,6 +326,28 @@ function VoteFormList() {
           </Form.Control>
         </Form.Group>
         <div className="message-error">{!error.mesa && '* Campo requerido'}</div>
+      </Col>
+    </Row>
+    <Row className='mt-5'>
+      <Col lg={5}>
+      <div className='titulo2'>Votos válidos (Intendente)</div>
+        <Form.Group controlId="numberInput" style={{width:"75px"}}>
+            <Form.Control
+              type="number"
+              value={blanco}
+              onChange={handleBlancoChange}
+            />
+          </Form.Group>
+      </Col>
+      <Col lg={3}>
+      <div className='titulo2'>Total de sobres</div>
+        <Form.Group controlId="numberInput"  style={{width:"75px"}}>
+            <Form.Control
+              type="number"
+              value={anulado}
+              onChange={handleAnuladoChange}
+            />
+          </Form.Group>
       </Col>
     </Row>
     <br></br>
@@ -397,28 +419,6 @@ function VoteFormList() {
     </React.Fragment>
   ))}
 </Row>
-    <Row className='mt-5'>
-      <Col lg={5}>
-      <div className='titulo2'>Votos válidos (Intendente)</div>
-        <Form.Group controlId="numberInput" style={{width:"75px"}}>
-            <Form.Control
-              type="number"
-              value={blanco}
-              onChange={handleBlancoChange}
-            />
-          </Form.Group>
-      </Col>
-      <Col lg={3}>
-      <div className='titulo2'>Total de sobres</div>
-        <Form.Group controlId="numberInput"  style={{width:"75px"}}>
-            <Form.Control
-              type="number"
-              value={anulado}
-              onChange={handleAnuladoChange}
-            />
-          </Form.Group>
-      </Col>
-    </Row>
     <Row style={{marginTop: "20px"}}>
         <Col xs={12}>
             <Button variant="primary" type="button" className="primary-button" onClick={handleSubmit}>

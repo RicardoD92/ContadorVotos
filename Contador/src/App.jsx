@@ -9,6 +9,7 @@ import Stats_scholl from './pages/Stats_scholl'
 import PrivateRoute from './utils/PrivateRoute'
 import Stats_section from './pages/Stats_section'
 import Stats_mesa from './pages/Stats_mesa'
+import List_of_votos from './pages/List_of_votos'
 function App() {
   
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/estadisticas-seccion" element={<PrivateRoute><Stats_section /></PrivateRoute>} />
       <Route path="/estadisticas-mesa" element={<PrivateRoute><Stats_mesa /></PrivateRoute>} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/votos" element={<PrivateRoute><List_of_votos /></PrivateRoute>} />
     </Routes>
   </>
 

@@ -17,7 +17,7 @@ const Header = () => {
  
   const handleDownload = async () => {
     try {
-      const response = await axios.get('http://45.229.251.93:3002/votos/descargar-votos', {
+      const response = await axios.get('http://localhost:3002/votos/descargar-votos', {
         responseType: 'blob', // Importante: indicar que la respuesta es un archivo blob
       });
 
@@ -80,7 +80,8 @@ const Header = () => {
                 <Link className="navOption" to="/estadisticas-mesa">
                   Por Mesa
                 </Link><br/>
-                <Link className="navOption" to="/" onClick={handleDownload}>Descargar resultados</Link>
+                <Link className="navOption" to="/" onClick={handleDownload}>Descargar resultados</Link><br/>
+                <Link className="navOption" to="/votos">Ver votos</Link><br/>
               </NavDropdown>
             </Nav>
             <Nav className="ml-auto">
