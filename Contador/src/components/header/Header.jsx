@@ -44,7 +44,6 @@ const Header = () => {
     if(token){
       setHeaderState(true);
       const currentDate = Date.now() / 1000;
-      console.log(currentDate)
       if(currentDate > localStorage.getItem('expire_token_in')){
         setHeaderState(false);
         localStorage.removeItem('token');

@@ -19,7 +19,6 @@ const TableVotos = ({ data, int }) => {
       <tbody>
         {data.map(item => (
           <tr key={item.id}>
-            {console.log(item)}
             <td>{item.nombre}</td>
             <td>{item.votos}</td>
             <td>{item.porcentaje === "Infinity" || typeof item.porcentaje === "undefined" ? "" : item.porcentaje + "%"}</td>

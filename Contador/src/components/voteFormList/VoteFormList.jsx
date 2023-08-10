@@ -361,7 +361,7 @@ function VoteFormList() {
           <Row style={{marginBottom: "20px"}}> 
             <React.Fragment key={groupId}>
               <Col lg={12} xs={12} style={{backgroundColor: "#f5f5f5", padding: "12px", marginBottom: "5px"}}>
-                {console.log("group", presidentesGroup)}
+              
                 <div className="titulo-agrupacion" style={{fontFamily: 'PoppinsBold', fontSize: "20px"}}>{`${presidentesGroup[0].agrupacion.name}`}</div>
               </Col>
               {presidentesGroup.map((presidente) => (
