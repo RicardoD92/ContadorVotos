@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Form, Button,Col, Row , InputGroup, Modal} from 'react-bootstrap'
+import {Form, Button,Col, Row , Modal} from 'react-bootstrap'
 import configJson from '../../utils/config.json'
 import axios from 'axios'
 import CandidatoItem from '../candidatoItem/CandidatoItem';
