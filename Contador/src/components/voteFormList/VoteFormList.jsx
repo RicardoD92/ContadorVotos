@@ -114,7 +114,6 @@ function VoteFormList() {
         }, {});
         setIntendente(response.data.data);
         setGroupedIntendentes(groupedIntendentes);
-        set
       } catch (err) {
         console.log(err);
       }
@@ -156,7 +155,8 @@ function VoteFormList() {
         try{
         const response = await axios.get(url);
         setEscuela(response.data.data.localidades);
-        
+        setEscuelaSeleccionada(0);
+        console.log(escuelaSeleccionada);
         } catch(err){
             console.log(err)
         }
@@ -164,7 +164,6 @@ function VoteFormList() {
     const handleSelectLocalidad = (e) => {
         setLocalidadSeleccionada(Number(e.target.value));
         setMesa([]);
-        setEscuelaSeleccionada(0);
         setError((prevError) => ({
           ...prevError,
           localidad: true
@@ -173,7 +172,8 @@ function VoteFormList() {
     }
     const handleSelectEscuela = (e) => {
         var escuela = JSON.parse(e.target.value);
-        setEscuelaSeleccionada(escuela.id);
+        setEscuelaSeleccionada(Number(escuela.id));
+        setMesaSeleccionada(0);
         setError((prevError) => ({
           ...prevError,
           escuela: true
@@ -302,8 +302,8 @@ function VoteFormList() {
       <Col lg={4} xs={12}>
         <Form.Group controlId="selector2">
           <Form.Label style={{fontFamily: 'PoppinsBold'}}>Escuela</Form.Label>
-          <Form.Control as="select" onChange={handleSelectEscuela} defaultValue="" value={escuelaSeleccionada ? escuelaSeleccionada : ''}>
-            <option disabled  value="" key="">
+          <Form.Control as="select" onChange={handleSelectEscuela} defaultValue="">
+            <option  value="" key="">
                 Seleccionar escuela
             </option>
             {escuela.map(escuela => (
