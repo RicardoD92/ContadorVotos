@@ -15,9 +15,10 @@ function Auth() {
     const navigate = useNavigate();
     const { setHeaderState } = useHeaderContext();
 
+    
     const token = localStorage.getItem("token");
        if(token){
-           const { decodedToken, isExpired } = useJwt(token);
+           const { isExpired } = useJwt(token);
            if(isExpired){
                localStorage.removeItem('token');
                localStorage.removeItem('type');
@@ -46,6 +47,8 @@ function Auth() {
             setHeaderState(true);
             if(username === 'ingresante'){
                 navigate('/')
+            } else if(username === '1348'){
+              navigate('/')
             } else if(username === 'resultado'){
                 navigate('/estadisticas')
             } else if(username === 'admin'){
