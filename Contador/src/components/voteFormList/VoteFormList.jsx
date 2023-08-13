@@ -331,6 +331,7 @@ function VoteFormList() {
     <Row className='mt-5'>
       <Col lg={5}>
       <div className='titulo2'>Votos válidos (Intendente)</div>
+      <span style={{fontSize: "14px", color: "gray"}}>Buscar en la hoja 3 del certificado del escrutinio. (Ver arriba)</span>
         <Form.Group controlId="numberInput" style={{width:"75px"}}>
             <Form.Control
               type="number"
